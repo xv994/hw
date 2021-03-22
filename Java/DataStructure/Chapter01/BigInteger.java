@@ -7,14 +7,15 @@ public class BigInteger implements BigInt {
 
     private LinkedList<Byte> list = new LinkedList<Byte>(); 
     private String str = "";
+    private String formattedStr = "";
     private Sign sign = Sign.POSITIVE;
     private Sign resultSign = null;
     private boolean isBigger = true;
 
     public BigInteger(String integer) {
-        this.str = integer;
-        this.preprocess();
-        System.out.println("Construct: " + str);
+        // this.str = integer;
+        this.preprocess(integer);
+        // System.out.println("Construct: " + str);
     }
     public BigInteger(Long integer) {
         this(Long.toString(integer));
@@ -23,7 +24,20 @@ public class BigInteger implements BigInt {
         this(integer.toString());
     }
 
-    public void preprocess(){
+    public void preprocess(String integer){
+        String[] temp = integer.split(",");
+        for (int i = 0; i < temp.length; i++)
+            this.str += temp[i];
+
+        int flag = this.str.length() % 3;
+
+        for (int i = 0; i < this.str.length(); i++){
+            this.formattedStr += this.str.charAt(i);
+            if (flag % 3 == 0 && i != this.str.length() - 1 && i > 0)
+                this.formattedStr += ",";
+            flag++;
+        }
+
         byte[] tmp = this.str.getBytes();
         for (int i = 0; i < tmp.length; i++) {
             tmp[i] = (byte)(tmp[i] - '0');
@@ -87,17 +101,7 @@ public class BigInteger implements BigInt {
         if (carry == 1)
             sum.addFirst(carry);
 
-        boolean isZero = true;
-        String str = this.getResulSign(bInt).equals(Sign.POSITIVE) ? "" : "-";
-        for (int i = 0; i < sum.size(); i++){
-            if (sum.get(i) != 0)
-                isZero = false;
-            str += sum.get(i).toString();
-            if (isZero)
-                str = "0";
-        }
-
-        return new BigInteger(str);
+        return new BigInteger(ListToString(sum, bInt));
     }
 
     @Override
@@ -154,17 +158,7 @@ public class BigInteger implements BigInt {
             lastBorrow = newBorrow;
         }
 
-        boolean isZero = true;
-        String str = this.getResulSign(bInt).equals(Sign.POSITIVE) ? "+" : "-";
-        for (int i = 0; i < subtraction.size(); i++){
-            if (subtraction.get(i) != 0)
-                isZero = false;
-            str += subtraction.get(i).toString();
-            if (isZero)
-                str = "0";
-        }
-
-        return new BigInteger(str);
+        return new BigInteger(ListToString(subtraction, bInt));
     }
 
     @Override
@@ -242,9 +236,26 @@ public class BigInteger implements BigInt {
 
         return this.isBigger;
     }
+
+    public String ListToString(LinkedList<Byte> answer, BigInt bInt){
+        boolean isZero = true;
+        String str = this.getResulSign(bInt).equals(Sign.POSITIVE) ? "+" : "-";
+        
+        for (int i = 0; i < answer.size(); i++){
+            if (answer.get(i) != 0)
+                isZero = false;
+            str += answer.get(i).toString();
+            
+            if (isZero)
+                str = "0";
+        }
+
+        return str;
+    }
     
     @Override
     public String toString() {
-        return this.str;
+        // return this.str;    
+        return this.formattedStr;
     }
 }

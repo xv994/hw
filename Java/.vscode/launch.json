@@ -6,32 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch Text",
+            "name": "Launch TestMain",
             "request": "launch",
-            "mainClass": "course.Race.Text",
-            "projectName": "Java_a7c07b7c"
-        },
-        {
-            "type": "java",
-            "name": "Launch Test",
-            "request": "launch",
-            "mainClass": "course.Test",
-            "projectName": "Java_a7c07b7c",
-            "console": "externalTerminal"
-        },
-        {
-            "type": "java",
-            "name": "Launch test",
-            "request": "launch",
-            "mainClass": "DataStructure.Chapter01.test",
-            "projectName": "Java_a7c07b7c"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch) - Launch Demo",
-            "request": "launch",
-            "mainClass": "Demo",
-            "projectName": "Java_a7c07b7c"
+            "mainClass": "DataStructure.Chapter01.TestMain",
+            "projectName": "Java_5e4ce36b"
         },
         {
             "type": "java",
