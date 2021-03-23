@@ -29,7 +29,11 @@ public class BigInteger implements BigInt {
         for (int i = 0; i < temp.length; i++)
             this.str += temp[i];
 
-        int flag = this.str.length() % 3;
+        int flag = 0;
+        if (this.str.charAt(0) == '+' || this.str.charAt(0) == '-')
+            flag = this.str.length() % 3 - 1;
+        else
+            flag = this.str.length() % 3; 
 
         for (int i = 0; i < this.str.length(); i++){
             this.formattedStr += this.str.charAt(i);

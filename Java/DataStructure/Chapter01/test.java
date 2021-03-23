@@ -10,14 +10,14 @@ public class test {
 
         while (true){
             
-            String operator = input.nextLine();
             System.out.print("Please input the first number: ");
             String number1 = input.nextLine();
             System.out.print("Please input the second number: ");
             String number2 = input.nextLine();
             System.out.println("Please choose the kind of operation");
             System.out.println("1.add\n2.sub\n3.exit");
-
+            String operator = input.nextLine();
+            
             if (operator.equals("1"))
                 System.out.println("The result is " + new BigInteger(number1).add(new BigInteger(number2)));
             else if (operator.equals("2"))
