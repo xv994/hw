@@ -5,12 +5,12 @@ import java.util.LinkedList;
 
 public class BigInteger implements BigInt {
 
-    private LinkedList<Byte> list = new LinkedList<Byte>(); 
-    private String str = "";
-    private String formattedStr = "";
-    private Sign sign = Sign.POSITIVE;
-    private Sign resultSign = null;
-    private boolean isBigger = true;
+    private LinkedList<Byte> list = new LinkedList<Byte>(); // 'list' stores the absolute value of the value
+    private String str = ""; // 'str' stores the String of number
+    private String formattedStr = "";   // 'formattedStr' stores the String of number with commas 
+    private Sign sign = Sign.POSITIVE;  // 'sign' stores the Sign of number
+    private Sign resultSign = null;     //'resultSign' stores the Sign of result of this number add/sub the other value 
+    private boolean isBigger = true;    // 'isBigger' stores whether this number is bigger than another number when preforming operations
 
     public BigInteger(String integer) {
         // this.str = integer;
@@ -24,17 +24,25 @@ public class BigInteger implements BigInt {
         this(integer.toString());
     }
 
+    /**
+     * data preprocess
+     * include str to formattedstr
+     * @param integer
+     */
     public void preprocess(String integer){
         String[] temp = integer.split(",");
         for (int i = 0; i < temp.length; i++)
             this.str += temp[i];
 
+        // flag : by the value of flag, decide where to start processing
         int flag = 0;
+        // because the exitstence of sign, the value of flag may need to be increased by one
         if (this.str.charAt(0) == '+' || this.str.charAt(0) == '-')
             flag = this.str.length() % 3 - 1;
         else
             flag = this.str.length() % 3; 
 
+        // by travarsing 'str' and the value of flag, we add a comma
         for (int i = 0; i < this.str.length(); i++){
             this.formattedStr += this.str.charAt(i);
             if (flag % 3 == 0 && i != this.str.length() - 1 && i > 0)
@@ -42,11 +50,17 @@ public class BigInteger implements BigInt {
             flag++;
         }
 
+        // using the built-in functions of String, String -> byte[]
         byte[] tmp = this.str.getBytes();
+        // because forced type conversion (char -> byte), we must process value of each one
         for (int i = 0; i < tmp.length; i++) {
             tmp[i] = (byte)(tmp[i] - '0');
         }
 
+        /**  
+         * determine whether the first value of the array is a symbol value
+         * parameter 'i' is equivalent to the flag
+         */
         int i = 0;
         if (tmp[0] < 0){
             if (tmp[0] == -3)   this.sign = Sign.NEGATIVE;
