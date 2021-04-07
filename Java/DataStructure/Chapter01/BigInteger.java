@@ -34,6 +34,10 @@ public class BigInteger implements BigInt {
         for (int i = 0; i < temp.length; i++)
             this.str += temp[i];
 
+        while (this.str.charAt(0) == '0'){
+            this.str = this.str.substring(1);
+        }
+
         // flag : by the value of flag, decide where to start processing
         int flag = 0;
         // because the exitstence of sign, the value of flag may need to be increased by one
@@ -84,7 +88,7 @@ public class BigInteger implements BigInt {
     @Override
     public BigInt add(BigInt bInt) {
 
-        this.getResulSign(bInt);
+        this.getAddResulSign(bInt);
 
         if (this.getSign().equals(bInt.getSign())){
             return absoluteAdd(bInt);
@@ -119,13 +123,13 @@ public class BigInteger implements BigInt {
         if (carry == 1)
             sum.addFirst(carry);
 
-        return new BigInteger(ListToString(sum, bInt));
+        return new BigInteger(addListToString(sum, bInt));
     }
 
     @Override
     public BigInt sub(BigInt bInt) {
 
-        this.getResulSign(bInt);
+        this.getSubResulSign(bInt);
         if (!this.getSign().equals(bInt.getSign()))
             return absoluteAdd(bInt);
         else
@@ -176,7 +180,7 @@ public class BigInteger implements BigInt {
             lastBorrow = newBorrow;
         }
 
-        return new BigInteger(ListToString(subtraction, bInt));
+        return new BigInteger(subListToString(subtraction, bInt));
     }
 
     @Override
@@ -219,7 +223,7 @@ public class BigInteger implements BigInt {
         return this.list.toArray(new Byte[this.list.size()]);
     }
 
-    Sign getResulSign(BigInt bInt){
+    Sign getAddResulSign(BigInt bInt){
 
         this.isBigger(bInt);
 
@@ -230,6 +234,22 @@ public class BigInteger implements BigInt {
         else if (this.getSign().equals(Sign.NEGATIVE) && bInt.getSign().equals(Sign.NEGATIVE) ||
                 (this.getSign().equals(Sign.POSITIVE) && bInt.getSign().equals(Sign.NEGATIVE) && !this.isBigger) ||
                 (this.getSign().equals(Sign.NEGATIVE) && bInt.getSign().equals(Sign.POSITIVE) && this.isBigger))
+            resultSign = Sign.NEGATIVE;
+
+        return resultSign;
+    }
+
+    Sign getSubResulSign(BigInt bInt){
+
+        this.isBigger(bInt);
+
+        if ((this.getSign().equals(Sign.POSITIVE) && bInt.getSign().equals(Sign.NEGATIVE)) ||
+            (this.getSign().equals(Sign.POSITIVE) && bInt.getSign().equals(Sign.POSITIVE) && this.isBigger) ||
+            (this.getSign().equals(Sign.NEGATIVE) && bInt.getSign().equals(Sign.NEGATIVE) && !this.isBigger))
+            resultSign = Sign.POSITIVE;
+        else if (this.getSign().equals(Sign.NEGATIVE) && bInt.getSign().equals(Sign.POSITIVE) ||
+                (this.getSign().equals(Sign.NEGATIVE) && bInt.getSign().equals(Sign.NEGATIVE) && this.isBigger) ||
+                (this.getSign().equals(Sign.POSITIVE) && bInt.getSign().equals(Sign.POSITIVE) && !this.isBigger))
             resultSign = Sign.NEGATIVE;
 
         return resultSign;
@@ -255,19 +275,33 @@ public class BigInteger implements BigInt {
         return this.isBigger;
     }
 
-    public String ListToString(LinkedList<Byte> answer, BigInt bInt){
+    public String addListToString(LinkedList<Byte> answer, BigInt bInt){
         boolean isZero = true;
-        String str = this.getResulSign(bInt).equals(Sign.POSITIVE) ? "+" : "-";
+        String str = this.getAddResulSign(bInt).equals(Sign.POSITIVE) ? "+" : "-";
         
         for (int i = 0; i < answer.size(); i++){
             if (answer.get(i) != 0)
                 isZero = false;
-            str += answer.get(i).toString();
-            
-            if (isZero)
-                str = "0";
+            if (!isZero)
+                str += answer.get(i).toString();
         }
+        if (isZero)
+            str = "0";
+        return str;
+    }
 
+    public String subListToString(LinkedList<Byte> answer, BigInt bInt){
+        boolean isZero = true;
+        String str = this.getSubResulSign(bInt).equals(Sign.POSITIVE) ? "+" : "-";
+        
+        for (int i = 0; i < answer.size(); i++){
+            if (answer.get(i) != 0)
+                isZero = false;
+            if (!isZero)
+                str += answer.get(i).toString();
+        }
+        if (isZero)
+            str = "0";
         return str;
     }
     
