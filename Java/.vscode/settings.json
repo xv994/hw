@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "d:\\Java\\lib\\mysql-connector-java-8.0.17.jar"
+        "d:\\Java\\lib\\mysql-connector-java-8.0.17.jar",
+        "DataStructure/Chapter03/lib/hanlp-portable-1.2.9.jar"
     ]
 }

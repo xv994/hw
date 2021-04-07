@@ -1,7 +1,6 @@
 package DataStructure.Chapter02;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +26,7 @@ public class HuffmanTree {
 	 * 生成的huffman树根结点
 	 */
 	private HTNode tree = null;
+	// private static String codeString = "";
 		
 	/**
 	 * 根据初始的结点列表，建立哈夫曼树，
@@ -107,6 +107,21 @@ public class HuffmanTree {
 
 		return map;
 	}
+
+	// public Map<Character, String> TEMP(HTNode tree) throws CloneNotSupportedException{
+	// 	Map<Character, String> map = new HashMap<>();
+
+		
+
+	// 	return map;
+	// }
+
+	// public Map<Character, String> DFS(HTNode tree){
+	// 	codeString += tree.getCode().getCode();
+	// 	if (tree.isLeaf()){
+			
+	// 	}
+	// }
 
 	public static void preprocess(HTNode tree){
 
