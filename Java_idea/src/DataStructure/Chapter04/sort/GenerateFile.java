@@ -1,4 +1,4 @@
-package cn.edu.bistu.cs.sort;
+package DataStructure.Chapter04.sort;
 
 import java.io.File;
 import java.io.FileWriter;

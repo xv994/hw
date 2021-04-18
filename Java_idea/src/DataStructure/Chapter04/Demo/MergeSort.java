@@ -1,4 +1,4 @@
-package Chapter04.Demo;
+package DataStructure.Chapter04.Demo;
 
 
 public class MergeSort {
